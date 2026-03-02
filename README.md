@@ -4,7 +4,7 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" width="150"/>
 </p>
 
-Repository ini berisi kumpulan tugas dan posttest mata kuliah **Struktur Data dan Algoritma (SDA)** menggunakan bahasa pemrograman **C++**.
+Repository ini berisi kumpulan tugas dan posttest praktikum **Struktur Data dan Algoritma (SDA)** menggunakan bahasa pemrograman **C++**.
 
 ---
 
