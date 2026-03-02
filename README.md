@@ -1,6 +1,8 @@
 # 📚 Praktikum Struktur Data dan Algoritma (SDA)
 
-![C++ Logo](https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg)
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" width="150"/>
+</p>
 
 Repository ini berisi kumpulan tugas dan posttest mata kuliah **Struktur Data dan Algoritma (SDA)** menggunakan bahasa pemrograman **C++**.
 
@@ -8,18 +10,18 @@ Repository ini berisi kumpulan tugas dan posttest mata kuliah **Struktur Data da
 
 ## 📂 Struktur Repository
 
-Praktikum-SDA/
-│
-├── POSTTEST_1/
-│ ├── soal-1.cpp
-│ ├── soal-2.cpp
-│ ├── soal-3.cpp
-│ └── soal-4.cpp
-│
-├── POSTTEST_2/
-│ └── ...
-│
-└── README.md
+- Praktikum-SDA/
+- │
+- ├── POSTTEST_1/
+- │ ├── soal-1.cpp
+- │ ├── soal-2.cpp
+- │ ├── soal-3.cpp
+- │ └── soal-4.cpp
+- │
+- ├── POSTTEST_2/
+- │ └── ...
+- │
+- └── README.md
 
 
 ---
@@ -41,16 +43,16 @@ Praktikum ini bertujuan untuk:
 
 Compile:
 
-g++ nama_file.cpp -o output
+- g++ nama_file.cpp -o output
 
 Run:
 
-./output
+- ./output
 
 Contoh:
 
-g++ soal-1.cpp -o soal1
-./soal1
+- g++ soal-1.cpp -o soal1
+- ./soal1
 
 ---
 
