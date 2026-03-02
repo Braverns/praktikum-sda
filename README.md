@@ -70,9 +70,9 @@ Contoh:
 
 ## 👨‍💻 Author
 
-Nama : Ahmad Mujahid  
-Kelas: B1'25
-Nim  : 059
+Nama : Ahmad Mujahid<br>
+Kelas: B1'25<br>
+Nim  : 059<br>
 
 ---
 
