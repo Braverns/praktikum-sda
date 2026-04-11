@@ -11,6 +11,7 @@ struct Hewan {
     string nama;
     string jenis;
     float harga;
+    bool darurat = false;
 };
 
 int n = 0;
@@ -208,6 +209,184 @@ void urutHarga(Hewan* data) {
     cout << ">> Berhasil urut harga\n";
 }
 
+const int MAX = 100;
+
+Hewan queueArr[MAX];
+int front = -1, rear = -1;
+
+bool isEmptyQueue() {
+    return front == -1;
+}
+
+bool isFullQueue() {
+    return rear == MAX - 1;
+}
+
+
+void enqueue(Hewan h) {
+    h.darurat = false;
+    if (isFullQueue()) {
+        cout << "Antrian penuh!\n";
+        return;
+    }
+
+    if (isEmptyQueue()) front = 0;
+
+    rear++;
+    queueArr[rear] = h;
+
+    cout << ">> " << h.nama << " masuk antrian.\n";
+}
+
+
+void enqueueDarurat(Hewan h) {
+    h.darurat = true;
+    if (isFullQueue()) {
+        cout << "Antrian penuh!\n";
+        return;
+    }
+
+    if (isEmptyQueue()) {
+        front = rear = 0;
+        queueArr[front] = h;
+    } else {
+        rear++;
+        for (int i = rear; i > front; i--) {
+            queueArr[i] = queueArr[i - 1];
+        }
+        queueArr[front] = h;
+    }
+
+    cout << ">> " << h.nama << " (DARURAT) masuk antrian depan!\n";
+}
+
+
+Hewan dequeue() {
+    Hewan kosong;
+    kosong.id = -1;
+
+    if (isEmptyQueue()) {
+        cout << "Antrian kosong!\n";
+        return kosong;
+    }
+
+    Hewan h = queueArr[front];
+
+    if (front == rear) {
+        front = rear = -1;
+    } else {
+        front++;
+    }
+
+    cout << ">> Memanggil: " << h.nama << " (ID: " << h.id << ")\n";
+
+    return h;
+}
+
+void tampilQueue() {
+    if (isEmptyQueue()) {
+        cout << "Antrian kosong!\n";
+        return;
+    }
+
+    cout << "\nANTRIAN:\n";
+
+    for (Hewan* i = queueArr + front; i <= queueArr + rear; i++) {
+        cout << "ID: " << i->id << " | Nama: " << i->nama << endl;
+    }
+}
+
+
+Hewan stackArr[MAX];
+int top = -1;
+
+bool isEmptyStack() {
+    return top == -1;
+}
+
+bool isFullStack() {
+    return top == MAX - 1;
+}
+
+
+void push(Hewan h) {
+    if (isFullStack()) {
+        cout << "Riwayat penuh!\n";
+        return;
+    }
+
+    top++;
+    stackArr[top] = h;
+
+    cout << ">> Riwayat ditambahkan: " << h.nama;
+
+    if (h.darurat)
+        cout << " (DARURAT)";
+
+    cout << endl;
+}
+
+
+void pop() {
+    if (isEmptyStack()) {
+        cout << "Riwayat kosong!\n";
+        return;
+    }
+
+    cout << ">> Menghapus riwayat: " << stackArr[top].nama << endl;
+    top--;
+}
+
+
+void tampilStack() {
+    if (isEmptyStack()) {
+        cout << "Riwayat kosong!\n";
+        return;
+    }
+
+    cout << "\nRIWAYAT:\n";
+
+    for (Hewan* i = stackArr; i <= stackArr + top; i++) {
+        cout << "ID: " << i->id 
+             << " | Nama: " << i->nama;
+
+        if (i->darurat)
+            cout << " (DARURAT)";
+
+        cout << endl;
+    }
+}
+
+
+void peekQueue() {
+    if (!isEmptyQueue()) {
+        cout << "Terdepan: " << queueArr[front].nama << endl;
+    }
+}
+
+void peekStack() {
+    if (!isEmptyStack()) {
+        cout << "Terakhir: " << stackArr[top].nama << endl;
+    }
+}
+
+void penangananDarurat() {
+    cout << "\nPENANGANAN DARURAT:\n";
+
+    if (isEmptyQueue()) {
+        cout << "Tidak ada antrian!\n";
+        return;
+    }
+
+    Hewan h = dequeue();
+
+    if (h.id != -1) {
+        push(h);
+    }
+
+    cout << ">> Pasien prioritas telah ditangani!\n";
+}
+
 int main() {
     Hewan arr[100];
     Hewan* p = arr;
@@ -218,25 +397,74 @@ int main() {
         cout << "\n __________________________________ \n";
         cout << "|        PAWCARE PETSHOP           |\n";
         cout << "|----------------------------------|\n";
-        cout << "| 1. Tambah Data Hewan             |\n";
-        cout << "| 2. Tampilkan Data Hewan          |\n";
-        cout << "| 3. Cari Hewan berdasarkan Nama   |\n";
-        cout << "| 4. Cari Hewan berdasarkan ID     |\n";
-        cout << "| 5. Urutkan berdasarkan Nama      |\n";
-        cout << "| 6. Urutkan berdasarkan Harga     |\n";
+        cout << "| 1. Penanganan Darurat            |\n";
+        cout << "| 2. Tambah Data Hewan             |\n";
+        cout << "| 3. Tampilkan Data Hewan          |\n";
+        cout << "| 4. Cari Hewan berdasarkan Nama   |\n";
+        cout << "| 5. Cari Hewan berdasarkan ID     |\n";
+        cout << "| 6. Urutkan berdasarkan Nama      |\n";
+        cout << "| 7. Urutkan berdasarkan Harga     |\n";
+        cout << "| 8. Masukkan ke Antrian           |\n";
+        cout << "| 9. Masukkan Riwayat Darurat      |\n";
+        cout << "|10. Panggil Pasien                |\n";
+        cout << "|11. Lihat Antrian                 |\n";
+        cout << "|12. Lihat Riwayat                 |\n";
+        cout << "|13. Undo Riwayat                  |\n";
+        cout << "|14. Peek                          |\n";
         cout << "| 0. Keluar                        |\n";
         cout << "|__________________________________|\n";
         cout << "Pilih menu: ";
         cin >> pilih;
 
         switch (pilih) {
-            case 1: tambah(p); break;
-            case 2: tampil(p); break;
-            case 3: cariNama(p); break;
-            case 4: cariID(p); break;
-            case 5: urutNama(p); break;
-            case 6: urutHarga(p); break;
-        }
+            case 1: penangananDarurat(); break;
+            case 2: tambah(p); break;
+            case 3: tampil(p); break;
+            case 4: cariNama(p); break;
+            case 5: cariID(p); break;
+            case 6: urutNama(p); break;
+            case 7: urutHarga(p); break;
+
+            case 8: {
+                int id;
+                cout << "Masukkan ID hewan: ";
+                cin >> id;
+
+                if (id > 0 && id <= n)
+                    enqueue(*(p + (id - 1)));
+                else
+                    cout << "ID tidak valid!\n";
+                break;
+            }
+
+            case 9: {
+                int id;
+                cout << "Masukkan ID hewan (DARURAT manual): ";
+                cin >> id;
+
+                if (id > 0 && id <= n)
+                    enqueueDarurat(*(p + (id - 1)));
+                else
+                    cout << "ID tidak valid!\n";
+                break;
+            }
+
+            case 10: {
+                Hewan h = dequeue();
+                if (h.id != -1)
+                    push(h);
+                break;
+            }
+
+            case 11: tampilQueue(); break;
+            case 12: tampilStack(); break;
+            case 13: pop(); break;
+
+            case 14:
+                peekQueue();
+                peekStack();
+                break;
+                    }
 
     } while (pilih != 0);
 

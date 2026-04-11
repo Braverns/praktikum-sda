@@ -208,6 +208,124 @@ void urutHarga(Hewan* data) {
     cout << ">> Berhasil urut harga\n";
 }
 
+const int MAX = 100;
+
+Hewan antri[MAX];
+int depan = -1, belakang = -1;
+
+bool kosongAntri() {
+    return depan == -1;
+}
+
+bool penuhAntri() {
+    return belakang == MAX - 1;
+}
+
+void masukAntri(Hewan h) {
+    if (penuhAntri()) {
+        cout << "Antrian penuh!\n";
+        return;
+    }
+
+    if (kosongAntri()) depan = 0;
+
+    belakang++;
+    antri[belakang] = h;
+
+    cout << ">> " << h.nama << " masuk antrian\n";
+}
+
+Hewan panggil() {
+    Hewan kosong;
+    kosong.id = -1;
+
+    if (kosongAntri()) {
+        cout << "Antrian kosong!\n";
+        return kosong;
+    }
+
+    Hewan h = antri[depan];
+
+    if (depan == belakang) {
+        depan = belakang = -1;
+    } else {
+        depan++;
+    }
+
+    cout << ">> Memanggil: " << h.nama << " (ID: " << h.id << ")\n";
+    return h;
+}
+
+void tampilAntri() {
+    if (kosongAntri()) {
+        cout << "Antrian kosong!\n";
+        return;
+    }
+
+    cout << "\n ______________________\n";
+    cout << "|      ANTRIAN        |\n";
+    cout << "|_____________________|\n";
+
+    for (Hewan* i = antri + depan; i <= antri + belakang; i++) {
+        cout << "|ID: " << i->id << " | " << i->nama << endl;
+    }
+}
+
+Hewan riwayat[MAX];
+int top = -1;
+
+bool kosongRiwayat() {
+    return top == -1;
+}
+
+bool penuhRiwayat() {
+    return top == MAX - 1;
+}
+
+void tambahRiwayat(Hewan h) {
+    if (penuhRiwayat()) {
+        cout << "Riwayat penuh!\n";
+        return;
+    }
+
+    top++;
+    riwayat[top] = h;
+
+    cout << ">> Masuk riwayat: " << h.nama << endl;
+}
+
+void tampilRiwayat() {
+    if (kosongRiwayat()) {
+        cout << "Riwayat kosong!\n";
+        return;
+    }
+
+    cout << "\n ______________________\n";
+    cout << "|       RIWAYAT       |\n";
+    cout << "|_____________________|\n";
+
+    for (Hewan* i = riwayat; i <= riwayat + top; i++) {
+        cout << "|ID: " << i->id << " | " << i->nama << endl;
+    }
+}
+
+void lihatDepan() {
+    if (!kosongAntri()) {
+        cout << "Depan antrian: " << antri[depan].nama << endl;
+    } else {
+        cout << "Antrian kosong\n";
+    }
+}
+
+void lihatAkhir() {
+    if (!kosongRiwayat()) {
+        cout << "Terakhir di riwayat: " << riwayat[top].nama << endl;
+    } else {
+        cout << "Riwayat kosong\n";
+    }
+}
+
+
 int main() {
     Hewan arr[100];
     Hewan* p = arr;
@@ -224,6 +342,11 @@ int main() {
         cout << "| 4. Cari Hewan berdasarkan ID     |\n";
         cout << "| 5. Urutkan berdasarkan Nama      |\n";
         cout << "| 6. Urutkan berdasarkan Harga     |\n";
+        cout << "| 7. Masuk Antrian                |\n";
+        cout << "| 8. Panggil Pasien              |\n";
+        cout << "| 9. Lihat Antrian               |\n";
+        cout << "|10. Lihat Riwayat               |\n";
+        cout << "|11. Peek                        |\n";
         cout << "| 0. Keluar                        |\n";
         cout << "|__________________________________|\n";
         cout << "Pilih menu: ";
@@ -236,6 +359,34 @@ int main() {
             case 4: cariID(p); break;
             case 5: urutNama(p); break;
             case 6: urutHarga(p); break;
+            case 7: {
+                int id;
+                cout << "Masukkan ID hewan: ";
+                cin >> id;
+
+                if (id > 0 && id <= n) {
+                    masukAntri(*(p + (id - 1)));
+                } else {
+                    cout << "ID tidak valid!\n";
+                }
+                break;
+            }
+
+            case 8: {
+                Hewan h = panggil();
+                if (h.id != -1) {
+                    tambahRiwayat(h);
+                }
+                break;
+            }
+
+            case 9: tampilAntri(); break;
+            case 10: tampilRiwayat(); break;
+
+            case 11:
+                lihatDepan();
+                lihatAkhir();
+                break;
         }
 
     } while (pilih != 0);
